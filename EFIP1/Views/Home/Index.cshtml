@@ -1,33 +1,74 @@
-﻿@{
+﻿@model EFIP1.Models.Calificacion
+
+@{
     ViewBag.Title = "Calificar Proveedor";
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>Calificar Proveedor</h1>
-    <div>
-        <div class="row">
-            <label>N° Proveedor</label>
-            <textarea></textarea>
+<form id="MyForm" action="Home/PostCalificacion" method="post">
+    <div class="jumbotron">
+        <h1>Calificar Proveedor</h1>
+        <br /><br />
+        <div>
+            <div class="row">
+                <label class="col-lg-4">N° Proveedor</label>
+                @Html.TextAreaFor(m => m.NroProveedor)
+            </div>
+            <div class="row">
+                <label class="col-lg-4">Orden de Compra</label>
+                @Html.TextAreaFor(m => m.NroOrdenCompra)
+            </div>
+            @*<div class="row">
+                <label class="col-lg-4">Fecha de Entrega</label>
+                <textarea></textarea>
+                @
+                @*TODO: Use jQuery calendar*@
         </div>
         <div class="row">
-            <label>Orden de Compra</label>
-            <textarea></textarea>
+            <label class="col-lg-4">Forma de Pago</label>
+            @Html.EnumDropDownListFor(m => m.FormaPago)
         </div>
         <div class="row">
-            <label>Fecha de Entrega</label>
-            <textarea></textarea>
-            @*TODO: Use jQuery calendar*@
+            <label class="col-lg-4">Puntaje de Calificación</label>
+            @Html.TextAreaFor(m => m.Puntaje)
         </div>
         <div class="row">
-            <label>Forma de Pago</label>
-            <select></select>
+            <label class="col-lg-4">Observaciones</label>
+            @Html.TextAreaFor(m => m.Observaciones)
         </div>
-        <div class="row"><label>Calificación</label><textarea></textarea> @*TODO: Use some plugin with stars? google "star rating jquery"*@</div>
-        <div class="row"><label>Observaciones</label><textarea></textarea></div>
-        <div class="row"><button>Cancelar</button><button>Finalizar</button></div>
+        <br /><br />
+        <div class="row"><button style="float: right">Calificar</button></div>
     </div>
-</div>
-<form action="/" method="post"></form> @*TODO: Use form?*@
+</form>
+
+<script>
+
+ $(document).ready(function () {
+     console.log(1);
+    $('#MyForm').submit(function (e) {
+        console.log(2);
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '@Url.Action("MyAction", "Home")',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+             // here in result you will get your data
+                console.log(result);
+            },
+            error: function (result) {
+
+            }
+        });
+        e.preventDefault();
+    });
+});
+</script>
 
 @*<div class="jumbotron">
         <h1>ASP.NET</h1>
