@@ -5,29 +5,40 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
+<style>
+    .smallTextArea {
+        height: 30px;
+    }
+
+    .toast {
+        opacity: 1 !important;
+    }
+
+    #toast-container > div {
+        opacity: 1 !important;
+    }
+</style>
+<script>
+    function success() {
+        toastr.options.progressBar = true;
+        toastr.options.preventDuplicates = true;
+
+        if (document.getElementById('calificar')) {
+            toastr.success('La calificación fue añadida exitosamente', 'Éxito');
+        } else {
+            toastr.error('Algunos datos fueron inválidos');
+        }
+    };
+</script>
+
 <html>
-<head>
-    <style>
-        .smallTextArea {
-            height: 50px;
-        }
-
-        .toast {
-            opacity: 1 !important;
-        }
-
-        #toast-container > div {
-            opacity: 1 !important;
-        }
-    </style>
-</head>
 <body>
     @using (Ajax.BeginForm("PostCalificacion", "Home", new AjaxOptions
     {
         InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "myForm",
+        UpdateTargetId = "farmaBody",
         HttpMethod = "POST",
-        OnSuccess = "toastr.success('La calificación fue añadida exitosamente', 'Éxito');"
+        OnSuccess = "success()"
     }, new { Id = "myForm" }))
     {
         <div class="jumbotron">
@@ -36,17 +47,12 @@
             <div>
                 <div class="row">
                     <label class="col-lg-4">N° Proveedor</label>
-                    @Html.TextAreaFor(m => m.NombreProveedor, new { @class = "smallTextArea" })
+                    @Html.TextBoxFor(m => m.NombreProveedor, new { @class = "smallTextArea" })
                 </div>
                 <div class="row">
                     <label class="col-lg-4">Orden de Compra</label>
-                    @Html.TextAreaFor(m => m.NroOrdenCompra, new { @class = "smallTextArea" })
+                    @Html.TextBoxFor(m => m.NroOrdenCompra, new { @class = "smallTextArea" })
                 </div>
-                @*<div class="row">
-                    <label class="col-lg-4">Fecha de Entrega</label>
-                    <textarea></textarea>
-                    @
-                    @*TODO: Use jQuery calendar*@
             </div>
             <div class="row">
                 <label class="col-lg-4">Forma de Pago</label>
@@ -54,7 +60,7 @@
             </div>
             <div class="row">
                 <label class="col-lg-4">Puntaje de Calificación</label>
-                @Html.TextAreaFor(m => m.Puntaje, new { @class = "smallTextArea" })
+                @Html.TextBoxFor(m => m.Puntaje, new { @class = "smallTextArea" })
             </div>
             <div class="row">
                 <label class="col-lg-4">Observaciones</label>
@@ -66,15 +72,3 @@
     }
 </body>
 </html>
-<script>
-    $(function () {
-        //$("#calificar").click(function () {
-        //    toastr.options.progressBar = true;
-        //    toastr.success('La calificación fue añadida exitosamente', 'Éxito');
-        //});
-        //$("#myForm").bind('ajax:complete', function () {
-        //    //event.preventDefault();
-
-        //});
-    });
-</script>

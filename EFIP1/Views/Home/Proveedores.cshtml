@@ -9,10 +9,12 @@
 
 @for (int i = 0; i < Model.Proveedores.Count(); ++i)
 {
-    @Html.HiddenFor(m => m.Proveedores[i].Nombre)
-    @Html.HiddenFor(m => m.Proveedores[i].PuntajePromedio)
+    <strong>@Html.DisplayTextFor(m => m.Proveedores[i].Nombre)</strong>
+    <span>@Html.DisplayTextFor(m => String.Format("{0:0.0#}", m.Proveedores[i].PuntajePromedio))</span>
 
-    @Html.Raw("(");
-    @Html.Display(string.Join(", ", Model.Proveedores[i].Valores).ToString())
+    @Html.Raw(" (");
+    @Html.Raw(string.Join(", ", Model.Proveedores[i].Valores).ToString());
     @Html.Raw(")");
+
+    <br />
 }
