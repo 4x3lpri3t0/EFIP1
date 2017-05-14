@@ -4,7 +4,7 @@ namespace EFIP1.Models
 {
     public class Calificacion : ICalificacion
     {
-        public int NroProveedor { get; set; }
+        public string NombreProveedor { get; set; }
 
         public int NroOrdenCompra { get; set; }
 
@@ -12,7 +12,7 @@ namespace EFIP1.Models
 
         public FormaPago FormaPago { get; set; }
 
-        public byte Puntaje { get; set; }
+        public int Puntaje { get; set; }
 
         public string Observaciones { get; set; }
     }

@@ -1,0 +1,18 @@
+﻿@model EFIP1.Models.ListaProveedores
+
+@{
+    ViewBag.Title = "Proveedores Calificados";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>Promedio de calificaciones para cada proveedor:</p>
+
+@for (int i = 0; i < Model.Proveedores.Count(); ++i)
+{
+    @Html.HiddenFor(m => m.Proveedores[i].Nombre)
+    @Html.HiddenFor(m => m.Proveedores[i].PuntajePromedio)
+
+    @Html.Raw("(");
+    @Html.Display(string.Join(", ", Model.Proveedores[i].Valores).ToString())
+    @Html.Raw(")");
+}

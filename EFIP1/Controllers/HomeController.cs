@@ -33,19 +33,28 @@ namespace EFIP1.Controllers
             return View();
         }
 
-        [HttpPost]
-        public string PostCalificacion(Calificacion calificacion)
+        public ActionResult Proveedores()
         {
-            if (calificacion.NroProveedor < 1 ||
+            var model = this.calificacionesService.ObtenerProveedores();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PostCalificacion(Calificacion calificacion)
+        {
+            bool puntajeInvalido = (calificacion.Puntaje < 1 || calificacion.Puntaje > 5);
+
+            if (string.IsNullOrWhiteSpace(calificacion.NombreProveedor) ||
                 calificacion.NroOrdenCompra < 1 ||
-                (calificacion.Puntaje < 1 || calificacion.Puntaje > 5))
+                puntajeInvalido)
             {
-                return "Hi there!";
+                return View("Error");
             }
 
-            this.calificacionesService.AddCalificacion(calificacion);
+            this.calificacionesService.AgregarCalificacion(calificacion);
 
-            return "Hi there!";
+            return RedirectToAction("Index");
         }
     }
 }

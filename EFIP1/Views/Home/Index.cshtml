@@ -5,95 +5,76 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
-<form id="MyForm" action="Home/PostCalificacion" method="post">
-    <div class="jumbotron">
-        <h1>Calificar Proveedor</h1>
-        <br /><br />
-        <div>
-            <div class="row">
-                <label class="col-lg-4">N° Proveedor</label>
-                @Html.TextAreaFor(m => m.NroProveedor)
-            </div>
-            <div class="row">
-                <label class="col-lg-4">Orden de Compra</label>
-                @Html.TextAreaFor(m => m.NroOrdenCompra)
-            </div>
-            @*<div class="row">
-                <label class="col-lg-4">Fecha de Entrega</label>
-                <textarea></textarea>
-                @
-                @*TODO: Use jQuery calendar*@
-        </div>
-        <div class="row">
-            <label class="col-lg-4">Forma de Pago</label>
-            @Html.EnumDropDownListFor(m => m.FormaPago)
-        </div>
-        <div class="row">
-            <label class="col-lg-4">Puntaje de Calificación</label>
-            @Html.TextAreaFor(m => m.Puntaje)
-        </div>
-        <div class="row">
-            <label class="col-lg-4">Observaciones</label>
-            @Html.TextAreaFor(m => m.Observaciones)
-        </div>
-        <br /><br />
-        <div class="row"><button style="float: right">Calificar</button></div>
-    </div>
-</form>
+<html>
+<head>
+    <style>
+        .smallTextArea {
+            height: 50px;
+        }
 
+        .toast {
+            opacity: 1 !important;
+        }
+
+        #toast-container > div {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+    @using (Ajax.BeginForm("PostCalificacion", "Home", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "myForm",
+        HttpMethod = "POST",
+        OnSuccess = "toastr.success('La calificación fue añadida exitosamente', 'Éxito');"
+    }, new { Id = "myForm" }))
+    {
+        <div class="jumbotron">
+            <h1>Calificar Proveedor</h1>
+            <br /><br />
+            <div>
+                <div class="row">
+                    <label class="col-lg-4">N° Proveedor</label>
+                    @Html.TextAreaFor(m => m.NombreProveedor, new { @class = "smallTextArea" })
+                </div>
+                <div class="row">
+                    <label class="col-lg-4">Orden de Compra</label>
+                    @Html.TextAreaFor(m => m.NroOrdenCompra, new { @class = "smallTextArea" })
+                </div>
+                @*<div class="row">
+                    <label class="col-lg-4">Fecha de Entrega</label>
+                    <textarea></textarea>
+                    @
+                    @*TODO: Use jQuery calendar*@
+            </div>
+            <div class="row">
+                <label class="col-lg-4">Forma de Pago</label>
+                @Html.EnumDropDownListFor(m => m.FormaPago)
+            </div>
+            <div class="row">
+                <label class="col-lg-4">Puntaje de Calificación</label>
+                @Html.TextAreaFor(m => m.Puntaje, new { @class = "smallTextArea" })
+            </div>
+            <div class="row">
+                <label class="col-lg-4">Observaciones</label>
+                @Html.TextAreaFor(m => m.Observaciones)
+            </div>
+            <br /><br />
+            <div class="row"><button id="calificar" style="float: right">Calificar</button></div>
+        </div>
+    }
+</body>
+</html>
 <script>
+    $(function () {
+        //$("#calificar").click(function () {
+        //    toastr.options.progressBar = true;
+        //    toastr.success('La calificación fue añadida exitosamente', 'Éxito');
+        //});
+        //$("#myForm").bind('ajax:complete', function () {
+        //    //event.preventDefault();
 
- $(document).ready(function () {
-     console.log(1);
-    $('#MyForm').submit(function (e) {
-        console.log(2);
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: '@Url.Action("MyAction", "Home")',
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-             // here in result you will get your data
-                console.log(result);
-            },
-            error: function (result) {
-
-            }
-        });
-        e.preventDefault();
+        //});
     });
-});
 </script>
-
-@*<div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>
-    </div>*@
