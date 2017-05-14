@@ -35,7 +35,7 @@
 <body>
     @using (Ajax.BeginForm("PostCalificacion", "Home", new AjaxOptions
     {
-        InsertionMode = InsertionMode.Replace,
+        InsertionMode = InsertionMode.ReplaceWith,
         UpdateTargetId = "farmaBody",
         HttpMethod = "POST",
         OnSuccess = "success()"
@@ -50,7 +50,7 @@
                     @Html.TextBoxFor(m => m.NombreProveedor, new { @class = "smallTextArea" })
                 </div>
                 <div class="row">
-                    <label class="col-lg-4">Orden de Compra</label>
+                    <label class="col-lg-4">N° Orden de Compra</label>
                     @Html.TextBoxFor(m => m.NroOrdenCompra, new { @class = "smallTextArea" })
                 </div>
             </div>

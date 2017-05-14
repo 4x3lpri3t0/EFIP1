@@ -54,7 +54,7 @@ namespace EFIP1.Controllers
 
             this.calificacionesService.AgregarCalificacion(calificacion);
 
-            return RedirectToAction("Index");
+            return View("Index");
         }
     }
 }
